@@ -4,6 +4,8 @@ Cálculo automático de comissão com base em percentual definido
 Suporte a diferentes taxas de comissão por produto ou categoria
 
 Interface amigável e intuitiva
+
+//
 🧮 Como funciona
 O usuário informa o valor da venda
 
