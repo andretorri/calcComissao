@@ -7,16 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calcular Comissão!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,16 +19,43 @@
             android:id="@+id/valor_venda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Valor da Comissão" />
+            android:hint="Valor da Venda" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_calc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calcular"
+        android:text="Calcular a Comissão!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RadioGroup
+        android:id="@+id/tipoVendas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_calc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <RadioButton
+            android:id="@+id/vendaDireta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venda Direta" />
+
+        <RadioButton
+            android:id="@+id/showRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venda ShowRoom" />
+
+        <RadioButton
+            android:id="@+id/semiNovo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venda Semi-Novo" />
+    </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
