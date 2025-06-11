@@ -1,6 +1,7 @@
 package com.example.conversorUnidades
 
 import android.icu.text.DecimalFormat
+import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -14,11 +15,14 @@ import com.example.conversorUnidades.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.math.BigDecimal
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     //criando a binding do ViewBinding para retirar o uso do FindViewById
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        //conversor de moedas para valoração de Reais
+        val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,43 +40,39 @@ class MainActivity : AppCompatActivity() {
             val imtEmptyCheck = binding.valorVenda.text
             //if para checagem se o radio button foi selecionado
             if (!binding.vendaDireta.isChecked && !binding.showRoom.isChecked && !binding.semiNovo.isChecked) {
-                Snackbar.make(
-                    binding.valorVenda,
-                    "Selecione uma opção de venda.",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-            //if para checagem se o campo de valor foi preenchido
-            if (imtEmptyCheck?.isEmpty() == true) {
-                Snackbar.make(
-                    binding.valorVenda,
-                    "Preencha o campo com o valor.",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            } else {
-                val edtValue: Float = imtEmptyCheck.toString().toFloat()
-                // calculo da comissão
-                if (binding.vendaDireta.isChecked) {
-                    percentage = (edtValue * 0.45 / 100).toFloat()
-                } else if (binding.showRoom.isChecked) {
-                    percentage = (edtValue.toDouble() * 0.5f / 100).toFloat()
+                if (imtEmptyCheck?.isEmpty() == true) {
+                    binding.layoutValorVenda.error = "Preencha o campo com o valor."
+                    return@setOnClickListener
                 } else {
-                    binding.semiNovo.isChecked
-                    percentage = (edtValue.toDouble() * 0.75f / 100).toFloat()
+                    binding.layoutValorVenda.error = null // limpa erro se tiver
                 }
-                //resultado na tela
-                binding.resultadoVenda.text = "A Comissão foi de %.2f".format(percentage)
-                //limpando o campo de texto e radio buttons
+            }
+            //adição de try catch no lugar de checagem por IF
+            try {
+                val edtValue: Float = imtEmptyCheck.toString().toFloat()
+
+                // cálculo da comissão
+                percentage = when {
+                    binding.vendaDireta.isChecked -> edtValue * 0.45f / 100
+                    binding.showRoom.isChecked -> edtValue * 0.5f / 100
+                    else -> edtValue * 0.75f / 100
+                }
+
+                // mostrar resultado
+                binding.resultadoVenda.text = "A Comissão foi de ${currencyFormatter.format(percentage)}"
+                // limpar campos
                 binding.valorVenda.text?.clear()
                 binding.vendaDireta.isChecked = false
                 binding.showRoom.isChecked = false
                 binding.semiNovo.isChecked = false
+
+            } catch (e: NumberFormatException) {
+                binding.layoutValorVenda.error = "Digite um valor numérico válido."
             }
-            //recuperar os Radio Buttons pelo Viewbinding
-            binding.vendaDireta.setOnCheckedChangeListener { _, isChecked -> }
-            binding.showRoom.setOnCheckedChangeListener { _, isChecked -> }
-            binding.semiNovo.setOnCheckedChangeListener { _, isChecked -> }
         }
+        //recuperar os Radio Buttons pelo Viewbinding
+        binding.vendaDireta.setOnCheckedChangeListener { _, isChecked -> }
+        binding.showRoom.setOnCheckedChangeListener { _, isChecked -> }
+        binding.semiNovo.setOnCheckedChangeListener { _, isChecked -> }
     }
 }
