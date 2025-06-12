@@ -1,5 +1,6 @@
 package com.example.conversorUnidades
 
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import android.os.Bundle
@@ -21,8 +22,6 @@ class MainActivity : AppCompatActivity() {
     //criando a binding do ViewBinding para retirar o uso do FindViewById
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        //conversor de moedas para valoração de Reais
-        val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -50,25 +49,26 @@ class MainActivity : AppCompatActivity() {
             //adição de try catch no lugar de checagem por IF
             try {
                 val edtValue: Float = imtEmptyCheck.toString().toFloat()
-
                 // cálculo da comissão
                 percentage = when {
                     binding.vendaDireta.isChecked -> edtValue * 0.45f / 100
                     binding.showRoom.isChecked -> edtValue * 0.5f / 100
                     else -> edtValue * 0.75f / 100
                 }
-
-                // mostrar resultado
-                binding.resultadoVenda.text = "A Comissão foi de ${currencyFormatter.format(percentage)}"
-                // limpar campos
-                binding.valorVenda.text?.clear()
-                binding.vendaDireta.isChecked = false
-                binding.showRoom.isChecked = false
-                binding.semiNovo.isChecked = false
-
             } catch (e: NumberFormatException) {
                 binding.layoutValorVenda.error = "Digite um valor numérico válido."
             }
+            val intent = Intent(this, ResumeActivity::class.java)
+            intent.apply {
+                putExtra("valorVenda", binding.valorVenda.text.toString())
+                putExtra("percentage", percentage)
+            }
+            startActivity(intent)
+            // limpar campos
+            binding.valorVenda.text?.clear()
+            binding.vendaDireta.isChecked = false
+            binding.showRoom.isChecked = false
+            binding.semiNovo.isChecked = false
         }
         //recuperar os Radio Buttons pelo Viewbinding
         binding.vendaDireta.setOnCheckedChangeListener { _, isChecked -> }
