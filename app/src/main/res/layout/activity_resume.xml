@@ -9,23 +9,21 @@
 
     <TextView
         android:id="@+id/comissao_venda_txt"
+        style="@style/SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32sp"
         android:text="Valor comissão"
-        android:textSize="26sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/valor_nota_txt"
         app:layout_constraintStart_toStartOf="@+id/valor_nota_txt"
         app:layout_constraintTop_toBottomOf="@+id/valor_nota" />
 
     <TextView
         android:id="@+id/valor_comissao"
-        android:textSize="24dp"
+        style="@style/Results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/comissao_venda_txt"
         app:layout_constraintStart_toStartOf="@+id/comissao_venda_txt"
         app:layout_constraintTop_toBottomOf="@+id/comissao_venda_txt"
@@ -33,46 +31,44 @@
 
     <TextView
         android:id="@+id/summary_venda"
+        style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:text="Informações da Venda"
-        android:textSize="26sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/valor_nota_txt"
+        style="@style/SubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Valor da Nota Fiscal"
-        android:textSize="26sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/summary_venda"
         app:layout_constraintStart_toStartOf="@+id/summary_venda"
         app:layout_constraintTop_toBottomOf="@+id/summary_venda" />
 
     <TextView
         android:id="@+id/valor_nota"
-        android:textSize="24dp"
+        style="@style/Results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/valor_nota_txt"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/valor_nota_txt"
         app:layout_constraintTop_toBottomOf="@+id/valor_nota_txt"
         tools:text="R$123.123,21" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_voltar"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Calcular Novamente"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
