@@ -25,9 +25,11 @@ class ResumeActivity : AppCompatActivity() {
         }
         val valorRecebido = intent.getStringExtra("valorVenda")?.toFloatOrNull()
         val percentage = intent.getFloatExtra("percentage", 0.0f)
+        val comissao = intent.getStringExtra("valorPorcentagem")?.toFloatOrNull()
 
         binding.valorNota.text = valorRecebido.toString()
-        binding.valorComissao.text = "A Comissão foi de ${currencyFormatter.format(percentage)}"
+        binding.valorComissao.text = "A comissão foi de ${currencyFormatter.format(percentage)}"
+        binding.valorPorcentagem.text = "A porcentagem foi de ${comissao.toString()}%"
         binding.btnVoltar.setOnClickListener {
             finish()
         }
